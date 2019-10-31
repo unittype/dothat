@@ -214,16 +214,16 @@ body {
 }
 
 .login_form {
-	overflow-x: hidden;
 	max-width: 400px;
-	display: block;
-	overflow-y: auto;
 }
 .signup_form {
-	overflow-x: hidden;
-	overflow-y: auto;
 	max-width: 400px;
-	display: none;
+}
+#up {
+	display: none;	
+}
+#in {
+	display: block;	
 }
 .message {
 	text-align: center;
@@ -301,8 +301,10 @@ input[type="button"] {
 @media only screen and (max-width: 900px) {
 	.login_form {
 		max-width: 70%;
+		height: 100%;
 	}
 	.signup_form {
+		height: 100%;
 		max-width: 70%;
 	}
 }
