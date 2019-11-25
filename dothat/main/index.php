@@ -1,7 +1,15 @@
 <?php 
-define(GOLDEN_GATE, "Main page");
+session_start();
+if (!isset($_SESSION['username'])) {
+		header('location: /');
+}
+if (isset($_GET['logout'])) {
+	session_destroy();
+	unset($_SESSION['username']);
+}
+define(GOLDEN_GATE, $_SESSION['username']);
 
-$pic = array('data/image/Profile.jpg', 'data/image/lena.jpg', 'data/image/shh.jpg');
+$pic = array('data/image/lena.jpg', 'data/image/lena.jpg', 'data/image/shh.jpg', 'data/image/sdp.jpg', 'data/image/ddt.jpg', 'data/image/kuku.jpg');
 
 function resize_image($file, $percent) {
 	$filename = $file;
@@ -17,8 +25,6 @@ function resize_image($file, $percent) {
 	printf('src="data:image/jpeg;base64,%s"', base64_encode(ob_get_clean()));
 	imagedestroy($image_p);
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -51,14 +57,14 @@ function resize_image($file, $percent) {
 			<div id="bb" class="flex_row_space_between">
 				<img id="avatar" <?php resize_image($pic[0], 0.5);?> class="avatar">
 				<div id="desktop_menu" class="blue_button" onmouseover="dropdownon()" onclick="dropdown()">
-					<a href="userin.php"><p id="username"></p></a>
+					<p id="username"><?php echo GOLDEN_GATE; ?></p>
 					<div id="drop_menu" onmouseout="undropdown()">
 						<ul>
 							<li>Profile</li>
 							<li>Settings</li>
 							<li>Friends</li>
 							<li>FAQ</li>
-							<li>Log out</li>
+							<li onclick="logout();">Log out</li>
 						</ul>
 					</div>
 				</div>
@@ -67,19 +73,17 @@ function resize_image($file, $percent) {
 		</div>
 	</div>
 </header>
+<!-- Content Handler for request and events for echo and image call -->
 <content onclick="undropdown()">
 	<div id="content" class="container">
 		<div id="content_left" class="">
-
-<!--  POST STYLE START -->
-
 			<div class="post">
 				<div class="poster_info flex_midle_center">
 					<img <?php resize_image($pic[1], 0.2);?> class="avatar">
 					<div class="avatar_info"><b>Lena</b> @Lena_d</div>
 				</div>
 				<a class="post_content" href="">
-					<div class="media flex_col_center"><img <?php resize_image($pic[2], 0.2);?> /></div>
+					<div class="media flex_col_center"><img <?php resize_image($pic[2], 0.2);?> loading='lazy' /></div>
 					<div class="post_title">The Modern Lord of Dance</div>
 					<div class="post_text">
 					As the choreographer of the video for Sia's "Chandelier," FKA Twigs's Apple commercial, the Five Movements in 'The OA,' and, most recently, the musical finale of 'Transparent,' Ryan Heffington
@@ -96,87 +100,26 @@ function resize_image($file, $percent) {
 					</div>
 				</div>
 			</div>
-
-			<div class="post">
-				<div class="poster_info flex_midle_center">
-					<img <?php resize_image($pic[1], 0.2);?> class="avatar">
-					<div class="avatar_info"><b>Lena</b> @Lena_d</div>
-				</div>
-				<a class="post_content" href="">
-					<div class="media flex_col_center"><img <?php resize_image($pic[2], 0.2);?> /></div>
-					<div class="post_title">The Modern Lord of Dance</div>
-					<div class="post_text">
-					As the choreographer of the video for Sia's "Chandelier," FKA Twigs's Apple commercial, the Five Movements in 'The OA,' and, most recently, the musical finale of 'Transparent,' Ryan Heffington
-					</div>
-				</a>				
-				<div class="stat flex_midle_center">
-					<div class="likes flex_row_center">
-						<svg viewBox="0 0 35 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1695 24.417V14.5376C12.1695 13.368 13.1738 12.4592 14.3399 12.3689C14.9577 12.3211 15.5842 12.2183 16.0337 12.014L18.8441 5.69075C18.8441 3.93432 18.8441 0.964311 20.2492 1.47525C25.5186 3.39126 22.7083 12.3653 22.7083 12.3653H31.8419C33.9496 12.3653 34.6522 16.2295 31.8419 16.2295C31.8419 16.2295 33.9496 19.7424 30.0854 19.7424C30.0854 19.7424 32.1931 22.9041 29.0315 22.9041C29.0315 22.9041 31.8419 26.0657 26.9238 26.417H14.1695C13.0649 26.417 12.1695 25.5216 12.1695 24.417Z"  stroke-width="2"/><path d="M3.5 12.3653H7.35917C8.46374 12.3653 9.35917 13.2607 9.35917 14.3653V24.417C9.35917 25.5216 8.46374 26.417 7.35917 26.417H3.5C2.39543 26.417 1.5 25.5216 1.5 24.417V14.3653C1.5 13.2607 2.39543 12.3653 3.5 12.3653Z" stroke-width="2"/></svg>
-						<div class="likes_count">25.k</div>
-					</div>
-					<div class="comments flex_row_center">
-						<svg viewBox="0 0 33 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.2212 1H2.23037C1.55085 1 1 1.72212 1 2.6129V17.129C1 18.0198 1.55085 18.7419 2.23037 18.7419H4.38351V26L10.2278 18.7419H30.2212C30.9008 18.7419 31.4516 18.0198 31.4516 17.129V2.6129C31.4516 1.72212 30.9008 1 30.2212 1Z"  stroke-width="2"/></svg>
-						<div class="comments_count">123.k</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="post">
-				<div class="poster_info flex_midle_center">
-					<img <?php resize_image($pic[1], 0.2);?> class="avatar">
-					<div class="avatar_info"><b>Lena</b> @Lena_d</div>
-				</div>
-				<a class="post_content" href="">
-					<div class="media flex_col_center"><img <?php resize_image($pic[2], 0.2);?> /></div>
-					<div class="post_title">The Modern Lord of Dance</div>
-					<div class="post_text">
-					As the choreographer of the video for Sia's "Chandelier," FKA Twigs's Apple commercial, the Five Movements in 'The OA,' and, most recently, the musical finale of 'Transparent,' Ryan Heffington
-					</div>
-				</a>				
-				<div class="stat flex_midle_center">
-					<div class="likes flex_row_center">
-						<svg viewBox="0 0 35 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1695 24.417V14.5376C12.1695 13.368 13.1738 12.4592 14.3399 12.3689C14.9577 12.3211 15.5842 12.2183 16.0337 12.014L18.8441 5.69075C18.8441 3.93432 18.8441 0.964311 20.2492 1.47525C25.5186 3.39126 22.7083 12.3653 22.7083 12.3653H31.8419C33.9496 12.3653 34.6522 16.2295 31.8419 16.2295C31.8419 16.2295 33.9496 19.7424 30.0854 19.7424C30.0854 19.7424 32.1931 22.9041 29.0315 22.9041C29.0315 22.9041 31.8419 26.0657 26.9238 26.417H14.1695C13.0649 26.417 12.1695 25.5216 12.1695 24.417Z"  stroke-width="2"/><path d="M3.5 12.3653H7.35917C8.46374 12.3653 9.35917 13.2607 9.35917 14.3653V24.417C9.35917 25.5216 8.46374 26.417 7.35917 26.417H3.5C2.39543 26.417 1.5 25.5216 1.5 24.417V14.3653C1.5 13.2607 2.39543 12.3653 3.5 12.3653Z" stroke-width="2"/></svg>
-						<div class="likes_count">25.k</div>
-					</div>
-					<div class="comments flex_row_center">
-						<svg viewBox="0 0 33 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.2212 1H2.23037C1.55085 1 1 1.72212 1 2.6129V17.129C1 18.0198 1.55085 18.7419 2.23037 18.7419H4.38351V26L10.2278 18.7419H30.2212C30.9008 18.7419 31.4516 18.0198 31.4516 17.129V2.6129C31.4516 1.72212 30.9008 1 30.2212 1Z"  stroke-width="2"/></svg>
-						<div class="comments_count">123.k</div>
-					</div>
-				</div>
-			</div>
-
-<!--  POST STYLE END -->
-
-
-<!--  GROUP STYLE START -->
-
 		</div>
 		<div id="content_right" class="">
 			<div class="groups">
 				<div class="titles">Recomended groups</div>
-					
-					<div class="flex_midle_center  grp">
-						<img class="avatar" <?php resize_image("data/image/univ.jpg", 0.1);?> >
-						<div class="group_name">Kristmas Party</div>
-					</div>
-
+				<div class="flex_midle_center  grp">
+					<img class="avatar" <?php resize_image("data/image/univ.jpg", 0.1);?> >
+					<div class="group_name">Kristmas Party</div>
+				</div>
 			</div>
 			<div class="groups">
 				<div class="titles">Popular groups</div>
-					
-					<div class="flex_midle_center  grp">
-						<img class="avatar" <?php resize_image("data/image/univ.jpg", 0.1);?>>
-						<div class="group_name">Kristmas Party</div>
-					</div>
-					
-<!--  GROUP STYLE END -->
-					
-
-
+				<div class="flex_midle_center  grp">
+					<img class="avatar" <?php resize_image("data/image/univ.jpg", 0.1);?>>
+					<div class="group_name">Kristmas Party</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </content>
+<input type="hidden" id="goldendate" value="<?php echo GOLDEN_GATE; ?>">
 <div id="menu_back" onclick="openMenu()"></div>
 <div id="menu">
 	<div id="close" class="" onclick="openMenu()">×</div>
@@ -187,15 +130,22 @@ function resize_image($file, $percent) {
 			<li>Settings</li>
 			<li>Friends</li>
 			<li>FAQ</li>
-			<li>Log out</li>
+			<li onclick="logout();">Log out</li>
 		</ul>
 	</div>
-	<div id="copyright">&copy; dothat <?php echo date('Y');?> | all rights reserved</div>
+	<div id="copyright">&copy; dothat <?php echo date('Y');?> | KU License</div>
 </div>
-
-
-
 <script type="text/javascript">	
+	function logout() {
+		var ajax = new XMLHttpRequest();
+		ajax.open('GET', '?logout', true);
+		ajax.send();
+		ajax.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				window.location.replace('/');
+			}
+		}
+	}
 	function checkEmail(e) {
 		var filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
 		return filter.test(e);
@@ -203,7 +153,11 @@ function resize_image($file, $percent) {
 	function Check() {
 		var err = checkEmail(_('email').value);
 		console.log(err);		
-	}	
+	}
+	window.onload = function() {
+		var gg = _('goldendate').value;
+	}
+
 </script>
 </body>
 </html>

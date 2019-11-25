@@ -436,10 +436,10 @@ label {
 	display: none;
 }
 #username:before {
-		content: "Shon";
+		content: "";
 		white-space: nowrap;
 		font-family: 'Open_Sans';
-		width: 100%;
+		width: 100%;		
 }
 #menu {
 	width: 50%;

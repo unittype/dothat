@@ -57,3 +57,19 @@ function dropdownon() {
 function undropdown() {
   _('drop_menu').style.display= "none";
 }
+
+function validation () {
+	_('uname').value = 0 // Test.check()
+	_('password').value = 0 // Test.check()
+	
+}
+function check_sign_up () {
+	_('username').value = 0 // Test.check()
+	_('password').value = 0 // Test.check()
+	_('email').value = 0 // Test.check()
+	_('confrm_password').value = 0 // Test.check()
+	_('first_name').value = 0 // Test.check()
+	_('last_name').value = 0 // Test.check()
+	_('birthday').value = 0 // Test.check()
+	_('birthday').value = 0 // Test.check()
+}
